@@ -1,28 +1,27 @@
-.red {
-    color: red;
-}
-.movieWindow {
-    background-color: black;
-}
+
 
 body {
     background-image: url('Movies.jpg');
     background-repeat: no-repeat;
     background-size: cover;
  }
- .card-body {
+ .headerbodycontainer {
      box-shadow: 0 4px 8px 0 rgba (0,0,0,0,2);
      transition: 0.3s;
      width: 40%;
      height: 60%;
      position: center;
      background-color: black;
+     color: red;
+     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+ }
+ .card-header {
+     color: red;
+     background-color: black;
+     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
  }
  .container {
      padding: 2px 16px;
+     background-color: black;
  }
- h1 {
-     color: white;
-     padding: 20px;
-     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
- }
+

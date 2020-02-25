@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import MovieView from './MovieView';
+import MovieView from './movieview';
 // import NewsView from './NewsView';
 
 class App extends Component {
@@ -59,13 +59,10 @@ class App extends Component {
                   <input name="queryMovie" onChange={this.handleInputChange} placeholder="Enter Movie" value={this.state.queryMovie}></input>
                   <button onClick={this.searchMovie}>Search Movie</button>
                 </div> 
-                <div>
-
-                <MovieView 
+                <div className="headerbodycontainer"><MovieView 
                   results={this.state.results}
                   movieFound={this.state.movieFound}
-                />
-                </div>
+                /></div>
               </div>
             </div>
             <div className="col-6">
