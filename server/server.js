@@ -6,12 +6,18 @@ require('dotenv').config()
 app.use(express.static('dist'));
 app.use(express.static('public'));
 
+console.log('api key', process.env.APIKEY)
+
 app.get('/api', (req, res) => {
-    axios.get(`https://api.themoviedb.org/3/movie/550?api_key=${process.env.apikey}&query=${this.state.userMovie}`)
+    let query = req.param('query')
+    console.log('query log', query)
+    axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.APIKEY}&query=${query}`)
         .then((result) => {
+            console.log('results data log', result.data)
             res.send(result.data);
         })
         .catch((error) => {
+            console.log(error)
             res.send('An error occured.');
         })
 });
