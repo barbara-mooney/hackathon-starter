@@ -1,19 +1,29 @@
 import React, { Component } from 'react';
 
-export default props => (
+const MovieView = (props) => {
+    console.log(props.movieFound, 'props passed to movieview')
+    console.log(props.results.results, 'results inside movieview')
 
-    <div>        
-        <div className = "container movieCard">
-            <div className="row">
-                <div className="col">
-                    <h3>Title: {props.original_title}</h3>
-                    <img src="{props.poster_path}" alt={`${props.original_title}'s picture`} />
-                    <h4>Overview: {props.overview}</h4>
-                    <h4>Year released: {props.released_date}</h4>
-                    <h4>Link to movie: {props.homepage}</h4>
-                </div>
-            </div>
+    const testFunction = () => {
+        if (props.movieFound == true && props.results.length>0) {
+            {props.results.results.map(movie => {
+                return 
+                    <div>
+                        <h3>{movie.original_title}</h3>
+                        <p>{movie.release_date}</p>
+                        <p>{movie.overview}</p>  
+                    </div>      
+                })
+            }
+        } else {
+            return <div></div>
+        }
+    };
 
+    return (
+        <div>
+            testFunction()
         </div>
-    </div> 
-);
+    )
+}
+export default MovieView;

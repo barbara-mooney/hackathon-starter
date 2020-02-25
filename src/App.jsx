@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-// import MovieView from './MovieView';
-// import { response } from 'express';
+import MovieView from './MovieView';
+// import NewsView from './NewsView';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userMovie: '',
-      result: '',
-      movieData: '',
-      original_title: '',
-      poster_path: '',
-      released_date: '',
-      overview: '',
-      homepage: '',
+      queryMovie: '',
+      results: [],
+      newsdata:'',
       movieFound: false,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -24,63 +19,72 @@ class App extends Component {
   handleInputChange(event) {
     event.preventDefault()
     this.setState({
-      userMovie: event.target.value,
+      [event.target.name]: event.target.value,
     });
     }
 
   searchMovie(event) {
-    console.log(this.state.userMovie)
+    console.log(this.state.queryMovie)
     event.preventDefault()
     Axios
-    .get(`/api?query=${this.state.userMovie}`)
-    .then(result => {
-      console.log(result.data)
-      this.setState ({ 
-        result: result.data
-        })
-      }) 
+    .get(`/api?query=${this.state.queryMovie}`)
+    .then(results => results.data)
+    .then(results => this.setState({ 
+      results: results,
+      movieFound: true,
+     }))
+  }
+
+  componentWillMount() {
+    Axios 
+    .get(`http://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=4a6b942733e54342962e5df94feb48aa`)
+    .then(response => response.data)
+    .then(newsdata => this.setState({ newsdata }));
+    console.log('console inside componentwillmount', this.state.newsdata)
   }
 
   render() {
-    // let display;
-    // if (this.state.movieFound == true) {
-    //   return 
-    //     display = 
-    //       <div>
-    //         console.log(this.state.response)
-    //         var original_title = this.state.response.original_title;
-    //         console.log(original_title)
-    //         var poster_path = "https://image.tmdb.org/t/p/w500" + this.state.response.poster_path;
-    //         console.log(poster_path)
-    //         var release_date = this.state.response.release_date;
-    //         console.log(release_date)
-    //         var overview = this.state.response.overview;
-    //         console.log(overview)
-    //         var homepage = this.state.response.homepage;
-    //         console.log(homepage);
-    //         <MovieView
-    //           original_title={this.state.original_title}
-    //           poster_path={this.state.poster_path}
-    //           release_date={this.state.released_date}
-    //           overview = {this.state.overview}
-    //           homepage = {this.state.homepage}
-    //           />
-    //       </div>
-    // }
 
     return (
       <div className="container">
-        <div className="row">
+        <div className="headerbodycontainer">
+          <h2>App with 2 APIs</h2>
+          <h4>Movie Finder and Entertainment News</h4>
+        </div>
+          <div className="row">
             <div className="col-6">
-              <div className="card-header">Movie Finder</div>
+              <div className="headerbodycardcontainer">
+                <div className="card-header">Movie Finder</div>
                 <div className="card-body">
-                  <input name="userMovie" onChange={this.handleInputChange} placeholder="Enter Movie" value={this.state.userMovie}></input>
+                  <input name="queryMovie" onChange={this.handleInputChange} placeholder="Enter Movie" value={this.state.queryMovie}></input>
                   <button onClick={this.searchMovie}>Search Movie</button>
+                </div> 
+                <div>
+
+                <MovieView 
+                  results={this.state.results}
+                  movieFound={this.state.movieFound}
+                />
                 </div>
-                {/* <div className="card-body">{display}</div> */}
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="headerbodycontainer">
+                <div className="card-header">ENTERTAINMENT NEWS</div>
+                  {/* {
+                  this.state.newsdata.map(article => (
+                    <NewsView
+                      title={article.title}
+                      description={article.description}
+                      url={article.url}
+                      />
+                  ))
+                }   */}
+                <div className="card-body"></div>
               </div>
             </div>
         </div>
+      </div>
     );
   }
 }
