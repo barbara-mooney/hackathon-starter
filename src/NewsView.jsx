@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react'
+import News from './News'
 
-export default props => (
-    <div>        
-        <div className = "card card-body">
-            <h3>{props.title}</h3>
-            <p>{props.description}</p>
-            <a href={props.url} className="btn btn-link">Go to news</a>
-        </div>
-    </div>
-);
+const NewsView = (props) => {
+    console.log(props, 'consolelog insice newsview')
+    if (props.newsFound == true && props.response.totalResults>0) {
+        return (<div><News response={props.response}/></div>)
+    } else {
+        return <div></div>
+    }
+}
+
+export default NewsView;

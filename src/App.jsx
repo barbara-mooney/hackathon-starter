@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import MovieView from './movieview';
-// import NewsView from './NewsView';
+import MovieView from './MovieView';
+import NewsView from './NewsView';
 
 class App extends Component {
   constructor(props) {
@@ -9,11 +9,13 @@ class App extends Component {
     this.state = {
       queryMovie: '',
       results: [],
-      newsdata:'',
+      response: [],
       movieFound: false,
+      newsFound: true,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.searchMovie = this.searchMovie.bind(this);
+    this.getNews= this.getNews.bind(this);
   }
 
   handleInputChange(event) {
@@ -36,12 +38,12 @@ class App extends Component {
      }))
   }
 
-  componentWillMount() {
-    Axios 
+  getNews(event) {
+    event.preventDefault()
+    Axios
     .get(`http://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=4a6b942733e54342962e5df94feb48aa`)
     .then(response => response.data)
-    .then(newsdata => this.setState({ newsdata }));
-    console.log('console inside componentwillmount', this.state.newsdata)
+    .then(response => this.setState({ response }));
   }
 
   render() {
@@ -49,8 +51,7 @@ class App extends Component {
     return (
       <div className="container">
         <div className="headerbodycontainer">
-          <h2>App with 2 APIs</h2>
-          <h4>Movie Finder and Entertainment News</h4>
+          <h2>Movie finder and E! News!</h2>
         </div>
           <div className="row">
             <div className="col-6">
@@ -64,25 +65,25 @@ class App extends Component {
                   <MovieView 
                     results={this.state.results}
                     movieFound={this.state.movieFound}
-                /></div>
+                  />
+                </div>
               </div>
             </div>
             <div className="col-6">
-              <div className="headerbodycontainer">
-                <div className="card-header">ENTERTAINMENT NEWS</div>
-                  {/* {
-                  this.state.newsdata.map(article => (
-                    <NewsView
-                      title={article.title}
-                      description={article.description}
-                      url={article.url}
-                      />
-                  ))
-                }   */}
-                <div className="card-body"></div>
+              <div className="headerbodycardcontainer">
+                <div className="card-header">Entertainment news</div>
+                <div className="card-body">
+                  <button onClick={this.getNews}>Get entertainment news</button>
+                </div> 
+                <div className="container">
+                  <NewsView
+                    response={this.state.response}
+                    newsFound={this.state.newsFound}
+                    />
+                </div>
               </div>
             </div>
-        </div>
+          </div>
       </div>
     );
   }
