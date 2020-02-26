@@ -1,20 +1,22 @@
 import React from 'react';
 
 const Movie = (props) => {
-    return (
-        <div className="col-6">
-            <div className="card">
-                <div className="card-image-top">
-                    {
-                        props.poste_path == null ? <img src={`/movienotfound.jpg`} alt="card image"/> : <img src={`http://image.tmdb.org/t/p/w185${props.poster_path}`}/>
-                    }
-                </div>
-                <div className="card-body">
-                    <p><a href="#">View Details</a></p>
-                </div>
+    // THIS CONSOLE SHOWS THE ARRAY OF MOVIES AND IT CONSOLES LOG OK.
+    console.log(props.results.results, 'array props results results')
+
+    let display;
+    //I ALSO TRIED THE FOR LOOP BUT IT DIDN'T WORK. I TRIED RETURNING THE VALUE OR SAVING IT TO THE VARIABLE DISPLAY AND THEN RETURNING IT BUT IT'S NOT WORKING. I'M CONFUSED ON HOW TO MAKE IT WORK.
+
+    props.results.results.forEach ((movie) => {
+        display = 
+            <div>
+                `Movie title: ${movie.original_title}`
             </div>
-        </div>
-    )
+    })
+    
+    return 
+        display;
+
 }
 
 export default Movie;

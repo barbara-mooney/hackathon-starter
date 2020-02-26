@@ -32,6 +32,7 @@ class App extends Component {
     .then(results => this.setState({ 
       results: results,
       movieFound: true,
+      queryMovie: '',
      }))
   }
 
@@ -59,9 +60,10 @@ class App extends Component {
                   <input name="queryMovie" onChange={this.handleInputChange} placeholder="Enter Movie" value={this.state.queryMovie}></input>
                   <button onClick={this.searchMovie}>Search Movie</button>
                 </div> 
-                <div className="headerbodycontainer"><MovieView 
-                  results={this.state.results}
-                  movieFound={this.state.movieFound}
+                <div className="container">
+                  <MovieView 
+                    results={this.state.results}
+                    movieFound={this.state.movieFound}
                 /></div>
               </div>
             </div>
